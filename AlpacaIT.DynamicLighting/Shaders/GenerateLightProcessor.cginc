@@ -94,6 +94,5 @@ else if (light.is_randomshimmer())
 }
 
 // important attenuation that actually creates the point light with maximum radius.
-float attenuation = saturate(1.0 - light_distanceSqr / light.radiusSqr) * light.intensity;
-
+float attenuation = pow(1.0 - light_distanceSqr / light.radiusSqr, 2.5) * light.intensity;
 #undef GENERATE_NORMAL

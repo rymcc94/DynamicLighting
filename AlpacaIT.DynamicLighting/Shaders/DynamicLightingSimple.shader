@@ -3,6 +3,8 @@ Shader "Dynamic Lighting/Simple"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
+        _Color("Color", Color) = (1,1,1,1)
+
     }
     SubShader
     {
@@ -44,6 +46,8 @@ Shader "Dynamic Lighting/Simple"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            fixed4 _Color;
+
 
             v2f vert (appdata v)
             {
@@ -103,7 +107,7 @@ Shader "Dynamic Lighting/Simple"
                 light_final += DecodeLightmap(UNITY_SAMPLE_TEX2D(unity_Lightmap, i.uv2));
 
                 // sample the main texture, multiply by the light and add vertex colors.
-                fixed4 col = tex2D(_MainTex, i.uv0) * half4(light_final, 1) * i.color;
+                fixed4 col = tex2D(_MainTex, i.uv0) * half4(light_final, 1) * i.color * _Color;
                 
                 // apply fog.
                 UNITY_APPLY_FOG(i.fogCoord, col);
